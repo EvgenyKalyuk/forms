@@ -12,21 +12,12 @@ export const commonConfig = {
 
   resolve: {
     extensions: [
-      '.js', '.jsx'
-    ]
+      '.js', '.jsx',
+    ],
   },
 
   module: {
     rules: [
-      {
-        test: /\.bundle\.js$/,
-        use: {
-          loader: 'bundle-loader',
-          options: {
-            lazy: true
-          }
-        }
-      },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -34,11 +25,14 @@ export const commonConfig = {
           {
             loader: 'babel-loader',
             options: {
+              // compact: true,
+
               presets: [
                 'env', 'react'
               ],
               plugins: [
                 'syntax-dynamic-import',
+                'transform-decorators-legacy',
                 'transform-class-properties',
                 'transform-object-rest-spread'
               ]
@@ -51,15 +45,15 @@ export const commonConfig = {
 
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   minChunks: Infinity,
-    //   async: true
-    // }),
-    // new webpack.DefinePlugin({
-    //   'process.env': {
-    //     NODE_ENV: JSON.stringify(NODE_ENV)
-    //   }
-    // }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(NODE_ENV),
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      minChunks: Infinity,
+      async: true
+    })
   ],
 
   target: 'web'

@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import ProgressPlugin from 'webpack/lib/ProgressPlugin';
 import CompressionPlugin from 'compression-webpack-plugin';
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export const prodConfig = {
   entry: {
@@ -10,16 +10,35 @@ export const prodConfig = {
       'babel-polyfill',
       path.join(__dirname, '..', 'src', 'bootstrap.jsx')
     ],
-    vendors: [
-      'react',
-      'react-dom',
-      'redux',
-      'react-router'
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.styl$/,
+        exclude: /node_modules/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true
+              }
+            },
+            {
+              loader: 'stylus-loader'
+            }
+          ]
+        })
+      }
     ]
   },
 
+  target: 'web',
+
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin('css/[name].css'),
     new ProgressPlugin((percentage, msg) => {
       let percents = percentage * 100,
         percentageFormatted = String(percents).split('.').length > 1 ? (percents).toFixed(2) : percents;
@@ -28,9 +47,7 @@ export const prodConfig = {
       }
     }),
     new CompressionPlugin({
-      asset: "[path].gz[query]",
       algorithm: "gzip",
-      test: /\.js$|\.html$/,
       threshold: 10240,
       minRatio: 0.8
     }),
@@ -39,22 +56,16 @@ export const prodConfig = {
       debug: false,
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new UglifyJSPlugin({
-      minimize: true,
-      beautify: false,
-      unused: true,
-      drop_debugger: true, // eslint-disable-line camelcase
-      drop_console: true, // eslint-disable-line camelcase
-      mangle: {
-        screw_ie8: true,
-        keep_fnames: true,
-      },
-      compress: {
-        screw_ie8: true,
-        warnings: false,
-      },
-      comments: false,
-      sourceMap: false,
-    }),
+      new webpack.optimize.UglifyJsPlugin({
+          compress: {
+              warnings: false,
+              comparisons: false,
+          },
+          output: {
+              comments: false,
+              ascii_only: true,
+          },
+          sourceMap: false,
+      }),
   ]
 };

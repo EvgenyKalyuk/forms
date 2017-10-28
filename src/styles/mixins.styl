@@ -1,0 +1,18 @@
+@import "vars.styl";
+
+defaultBtn()
+  color $text-color
+  cursor pointer
+  background-color $default-btn-bg
+  border 1px solid $default-border-color
+  border-radius 3px
+  font-size $default-font-size
+  padding 8px 15px
+  text-decoration none
+
+  &:hover
+    background-color $default-btn-hover-bg
+
+  &_disabled
+    background-color $default-btn-hover-bg
+    cursor not-allowed

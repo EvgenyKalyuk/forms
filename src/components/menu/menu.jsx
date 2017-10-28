@@ -1,12 +1,26 @@
+import './menu.styl';
 import React from 'react';
-import {Link} from 'react-router';
-import {CLIENT_PAGES} from "../../common/const";
+import PropTypes from 'prop-types';
+import shortId from 'shortid';
+import { Link } from 'react-router';
 
-export const Menu = () => (
-  <ul>
-    <li>
-      <Link to={CLIENT_PAGES.PERSONAL}>Personal Form</Link>
-      <Link to={CLIENT_PAGES.COMPLETE}>Complete Form</Link>
-    </li>
+export const Menu = ({ items }) => (
+  <ul className='menu'>
+    {items.map(item => (
+      <li
+        className='menu__item'
+        key={ shortId.generate() }>
+        <Link
+          activeClassName='menu__link_active'
+          className='menu__link'
+          to={ item.path }>
+          { item.title }
+        </Link>
+      </li>
+    ))}
   </ul>
 );
+
+Menu.propTypes = {
+  items: PropTypes.array.isRequired,
+};

@@ -1,14 +1,16 @@
-import personalFormReducer from './personal-form.reducer';
+import formReducer from './forms.reducer';
+import completeReducer from './complete.reducer';
 
 const initialState = [
-  'PersonalFormState'
+  'formsState',
+  'completeState'
 ].reduce((state, key) => {
   state[key] = undefined;
   return state
 }, {});
 
 export const rootReducer = (state = initialState, action) => {
-  state.personalFormState = personalFormReducer(state.personalFormState, action);
-
+  state.formsState = formReducer(state.formsState, action);
+  state.completeState = completeReducer(state.completeState, action);
   return {...state};
 };

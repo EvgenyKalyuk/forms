@@ -1,0 +1,21 @@
+@import "../../styles/vars.styl";
+
+.menu
+  padding 0
+  list-style none
+
+  &__item
+    display inline-block
+    margin-left 20px
+
+    &:first-child
+      margin-left 0
+
+  &__link
+    background-color $menu-item-bg
+    color $text-color-secondary
+    text-decoration none
+    padding 10px 15px
+
+    &_active
+      background-color $menu-item-active-bg

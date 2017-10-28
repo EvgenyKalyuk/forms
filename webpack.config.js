@@ -6,6 +6,6 @@ import {devConfig} from './config/dev';
 import {prodConfig} from './config/prod';
 import {NODE_ENV} from './bin/env-config';
 
-const defineConfig = () => merge(commonConfig, devConfig);
+const defineConfig = () => merge(commonConfig, NODE_ENV === 'production' ? prodConfig : devConfig);
 
 export const compiler = webpack(defineConfig());
