@@ -12,7 +12,6 @@ Forms
 
 >yarn
 
-----------
 Develop Mode
 --------------------
 
@@ -31,8 +30,6 @@ Develop Mode
 или
 
 >yarn run start:dev
-
-----
 
 Production Mode
 -----------------------
@@ -53,14 +50,12 @@ Production Mode
 
 >yarn run start:build
 
-----
 Стек
 ------
 
 React v16
 Redux v3
 
-----
 Задание
 -----------
 
