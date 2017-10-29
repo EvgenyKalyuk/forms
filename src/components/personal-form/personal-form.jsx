@@ -1,8 +1,9 @@
 import React from 'react';
-import {FormHOC} from '../formHOC/form.hoc';
-import {CLIENT_PAGES} from '../../common/const';
+import PropTypes from 'prop-types';
+import FormHOC from '../formHOC/form.hoc';
+import { CLIENT_PAGES } from '../../common/const';
 
-const validation = values => {
+const validation = (values) => {
   const errors = {};
 
   if (!values.name) {
@@ -27,28 +28,29 @@ const PersonalForm = (props) => {
   const {
     submitForm,
     changeForm,
-    formsState = {}
+    formsState,
   } = props;
 
-  const {personal = {}} = formsState.payload;
-  const {values = {}, errors = {}} = personal;
+  const { personal = {} } = formsState.payload;
+  const { values = {}, errors = {} } = personal;
 
   const formValues = {
     name: values.name || '',
     years: values.years || '',
-    isAdult: values.isAdult || false
+    isAdult: values.isAdult || false,
   };
 
   const formErrors = {
     name: errors.name || null,
     years: errors.years || null,
-    isAdult: errors.isAdult || null
+    isAdult: errors.isAdult || null,
   };
 
   return (
     <form
       className='form'
-      onSubmit={submitForm}>
+      onSubmit={submitForm}
+    >
       <div className='form__group'>
         <label className='form__label'>
           <div className='form__label-item'>
@@ -60,7 +62,8 @@ const PersonalForm = (props) => {
               className={`form__field ${formErrors.name ? 'form__field_error' : ''}`}
               value={formValues.name}
               onChange={changeForm}
-              name='name'/>
+              name='name'
+            />
           </div>
         </label>
       </div>
@@ -74,7 +77,8 @@ const PersonalForm = (props) => {
               className={`form__field ${formErrors.years ? 'form__field_error' : ''}`}
               value={formValues.years}
               onChange={changeForm}
-              name='years'/>
+              name='years'
+            />
           </div>
         </label>
       </div>
@@ -89,7 +93,8 @@ const PersonalForm = (props) => {
               defaultChecked={formValues.isAdult}
               onChange={changeForm}
               name='isAdult'
-              type='checkbox'/>
+              type='checkbox'
+            />
             <span className='form__checkbox-icon' />
           </div>
         </label>
@@ -98,14 +103,26 @@ const PersonalForm = (props) => {
         <button className='form__btn'>Next</button>
       </div>
     </form>
-  )
+  );
 };
 
-export const PersonalFormComponent = FormHOC(PersonalForm, {
+PersonalForm.defaultProps = {
+  submitForm: () => null,
+  changeForm: () => null,
+  formsState: {},
+};
+
+PersonalForm.propTypes = {
+  submitForm: PropTypes.func,
+  changeForm: PropTypes.func,
+  formsState: PropTypes.object,
+};
+
+export default FormHOC(PersonalForm, {
   name: 'personal',
   masks: {
-    years: yearsMask
+    years: yearsMask,
   },
   validation,
-  redirectOnSuccess: CLIENT_PAGES.BANK
+  redirectOnSuccess: CLIENT_PAGES.BANK,
 });

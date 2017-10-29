@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {browserHistory} from 'react-router';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { browserHistory } from 'react-router';
 import {
   submitForm,
   submitSuccess,
   submitFail,
-  changeForm
+  changeForm,
 } from '../../actions/forms.actions';
 
-export const FormHOC = (WrappedComponent, formOption) => {
+const FormHOC = (WrappedComponent, formOption) => {
   const validation = values => formOption.validation && formOption.validation(values);
 
   const validateField = (name, value) => {
     const values = {
-      [name]: value
+      [name]: value,
     };
     const errors = formOption.validation && formOption.validation(values);
     return errors[name] || null;
@@ -29,15 +29,15 @@ export const FormHOC = (WrappedComponent, formOption) => {
 
       this.exports = {
         changeForm: this.onChangeHandler,
-        submitForm: this.onSubmitHandler
+        submitForm: this.onSubmitHandler,
       };
     }
 
-    onChangeHandler = ({target}) => {
-      const {name, value} = target;
+    onChangeHandler = ({ target }) => {
+      const { name, value } = target;
       let transformedValue = value;
       if (formOption.masks && formOption.masks[name]) {
-        transformedValue = maskField(value, formOption.masks[name])
+        transformedValue = maskField(value, formOption.masks[name]);
       }
       const error = validateField(name, transformedValue);
       this.props.changeForm(formOption.name, name, transformedValue, error);
@@ -48,7 +48,7 @@ export const FormHOC = (WrappedComponent, formOption) => {
       const form = e.target;
       const formLength = form.length;
       const formValues = {};
-      for (let i = 0; i < formLength; i++) {
+      for (let i = 0; i < formLength; i += 1) {
         const element = form.elements[i];
         if (element.type === 'text' || element.type === 'number') {
           formValues[element.name] = element.value;
@@ -60,12 +60,12 @@ export const FormHOC = (WrappedComponent, formOption) => {
       const errors = validation(formValues) || {};
       this.props.submitForm(formOption.name, formValues);
       if (Object.keys(errors).length) {
-        Object.keys(formValues).forEach(value => {
+        Object.keys(formValues).forEach((value) => {
           if (!errors[value]) {
             errors[value] = null;
           }
         });
-        this.props.submitFail(formOption.name, errors)
+        this.props.submitFail(formOption.name, errors);
       } else {
         const redirectPath = formOption.redirectOnSuccess;
         this.props.submitSuccess(formOption.name, formValues);
@@ -77,9 +77,18 @@ export const FormHOC = (WrappedComponent, formOption) => {
     };
 
     render() {
-      return <WrappedComponent {...this.props} {...this.exports} />
+      return <WrappedComponent {...this.props} {...this.exports} />;
     }
   }
+
+  Form.defaultProps = {
+    formsState: {},
+    submitForm: () => null,
+    submitSuccess: () => null,
+    submitFail: () => null,
+    changeForm: () => null,
+    initForm: () => null,
+  };
 
   Form.propTypes = {
     formsState: PropTypes.object,
@@ -90,8 +99,8 @@ export const FormHOC = (WrappedComponent, formOption) => {
     initForm: PropTypes.func,
   };
 
-  return connect(({formsState}) => ({
-    formsState
+  return connect(({ formsState }) => ({
+    formsState,
   }), dispatch => ({
     submitForm: bindActionCreators(submitForm, dispatch),
     submitSuccess: bindActionCreators(submitSuccess, dispatch),
@@ -99,3 +108,5 @@ export const FormHOC = (WrappedComponent, formOption) => {
     changeForm: bindActionCreators(changeForm, dispatch),
   }))(Form);
 };
+
+export default FormHOC;

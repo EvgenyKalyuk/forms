@@ -1,19 +1,26 @@
 import { EVENTS_FORM } from '../actions/forms.actions';
 import { EVENTS_COMPLETE } from '../actions/complete.actions';
 
-export const localStorageMiddleware = () =>
-  next => async action => {
+/* eslint-disable */
+const localStorageMiddleware = () =>
+  next => (action) => {
     if (action.type === EVENTS_FORM.TYPE_FORM_SUBMIT_SUCCESS) {
       localStorage.setItem(action.payload.name, JSON.stringify(action.payload.values));
-      return next(action)
+      return next(action);
     }
 
     if (action.type === EVENTS_FORM.TYPE_FORM_LOADING_VALUES) {
       let initValues = {};
 
-      Object.keys(localStorage).forEach(key => {
+      Object.keys(localStorage).forEach((key) => {
         if (key === 'isCompleted') return false;
-        initValues = {...initValues, [key]: {values: {...JSON.parse(localStorage[key])}}}
+        initValues = {
+          ...initValues,
+          [key]:
+            {
+              values: { ...JSON.parse(localStorage[key]) }
+            },
+        };
       });
 
       if (Object.keys(initValues).length) {
@@ -42,3 +49,5 @@ export const localStorageMiddleware = () =>
 
     return next(action);
   };
+
+export default localStorageMiddleware;

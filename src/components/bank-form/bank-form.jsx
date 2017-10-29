@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import { FormHOC } from '../formHOC/form.hoc';
-import {CLIENT_PAGES} from "../../common/const";
+import FormHOC from '../formHOC/form.hoc';
+import { CLIENT_PAGES } from '../../common/const';
 
-const validation = values => {
+const validation = (values) => {
   const errors = {};
 
   if (!values.bankNumber) {
@@ -19,11 +20,11 @@ const BankForm = (props) => {
   const {
     submitForm,
     changeForm,
-    formsState = {}
+    formsState,
   } = props;
 
-  const {bank = {}} = formsState.payload;
-  const {values = {}, errors = {}} = bank;
+  const { bank = {} } = formsState.payload;
+  const { values = {}, errors = {} } = bank;
 
   const formValues = {
     bankNumber: values.bankNumber || '',
@@ -36,7 +37,8 @@ const BankForm = (props) => {
   return (
     <form
       className='form'
-      onSubmit={submitForm}>
+      onSubmit={submitForm}
+    >
       <div className='form__group'>
         <label className='form__label'>
           <div className='form__label-item'>
@@ -48,14 +50,16 @@ const BankForm = (props) => {
               className={`form__field ${formErrors.bankNumber ? 'form__field_error' : ''}`}
               value={formValues.bankNumber}
               onChange={changeForm}
-              name='bankNumber'/>
+              name='bankNumber'
+            />
           </div>
         </label>
       </div>
       <div className='form__handler'>
         <Link
           className='form__btn'
-          to={CLIENT_PAGES.PERSONAL}>
+          to={CLIENT_PAGES.PERSONAL}
+        >
           Back
         </Link>
         <button className='form__btn'>
@@ -63,14 +67,26 @@ const BankForm = (props) => {
         </button>
       </div>
     </form>
-  )
+  );
 };
 
-export const BankFormComponent = FormHOC(BankForm, {
+BankForm.defaultProps = {
+  submitForm: () => null,
+  changeForm: () => null,
+  formsState: {},
+};
+
+BankForm.propTypes = {
+  submitForm: PropTypes.func,
+  changeForm: PropTypes.func,
+  formsState: PropTypes.object,
+};
+
+export default FormHOC(BankForm, {
   name: 'bank',
   validation,
   masks: {
-    bankNumber: bankNumberMask
+    bankNumber: bankNumberMask,
   },
-  redirectOnSuccess: CLIENT_PAGES.COMPLETE
+  redirectOnSuccess: CLIENT_PAGES.COMPLETE,
 });

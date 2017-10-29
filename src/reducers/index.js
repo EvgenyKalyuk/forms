@@ -3,14 +3,16 @@ import completeReducer from './complete.reducer';
 
 const initialState = [
   'formsState',
-  'completeState'
+  'completeState',
 ].reduce((state, key) => {
   state[key] = undefined;
-  return state
+  return state;
 }, {});
 
-export const rootReducer = (state = initialState, action) => {
+const rootReducer = (state = initialState, action) => {
   state.formsState = formReducer(state.formsState, action);
   state.completeState = completeReducer(state.completeState, action);
-  return {...state};
+  return { ...state };
 };
+
+export default rootReducer;

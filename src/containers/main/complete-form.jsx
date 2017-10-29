@@ -1,6 +1,5 @@
 import React from 'react';
-
-import {CompleteFormComponent} from '../../components/complete-form/complete-form'
+import CompleteFormComponent from '../../components/complete-form/complete-form';
 
 const CompleteFormContainer = () => (
   <div>

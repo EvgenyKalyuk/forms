@@ -16,43 +16,12 @@ export const commonConfig = {
     ],
   },
 
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              // compact: true,
-
-              presets: [
-                'env', 'react'
-              ],
-              plugins: [
-                'syntax-dynamic-import',
-                'transform-decorators-legacy',
-                'transform-class-properties',
-                'transform-object-rest-spread'
-              ]
-            }
-          }
-        ]
-      }
-    ]
-  },
-
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(NODE_ENV),
       }
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      minChunks: Infinity,
-      async: true
     })
   ],
 

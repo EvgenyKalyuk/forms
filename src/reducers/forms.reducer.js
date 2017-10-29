@@ -1,5 +1,5 @@
-import {EVENTS_FORM} from '../actions/forms.actions';
 import merge from 'deepmerge';
+import { EVENTS_FORM } from '../actions/forms.actions';
 
 const initState = {
   type: null,
@@ -7,19 +7,18 @@ const initState = {
     personal: {
       values: {},
       errors: {},
-      fieldsCount: 3
+      fieldsCount: 3,
     },
     bank: {
       values: {},
       errors: {},
-      fieldsCount: 1
+      fieldsCount: 1,
     },
-    isCompleted: false
   },
 };
 
 export default (stateCopy = initState, action) => {
-  const state = {...stateCopy};
+  const state = { ...stateCopy };
   switch (action.type) {
     case EVENTS_FORM.TYPE_FORM_SUBMIT_FAIL:
     case EVENTS_FORM.TYPE_FORM_SUBMIT_SUCCESS:
@@ -32,4 +31,4 @@ export default (stateCopy = initState, action) => {
     default:
       return state;
   }
-}
+};

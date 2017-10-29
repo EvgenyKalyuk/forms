@@ -1,5 +1,7 @@
+/* eslint-disable */
+
 export const CLIENT_PAGES = {
   PERSONAL: '/',
   BANK: '/bank',
-  COMPLETE: '/complete'
+  COMPLETE: '/complete',
 };

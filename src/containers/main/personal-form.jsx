@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { PersonalFormComponent } from '../../components/personal-form/personal-form';
+import PersonalFormComponent from '../../components/personal-form/personal-form';
 
 const PersonalFormContainer = () => (
   <div>

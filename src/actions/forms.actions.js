@@ -4,13 +4,13 @@ export const EVENTS_FORM = {
   TYPE_FORM_SUBMIT_SUCCESS: 'TYPE_FORM_SUBMIT_SUCCESS',
   TYPE_FORM_CHANGE: 'TYPE_FORM_CHANGE',
   TYPE_FORM_LOADING_VALUES: 'TYPE_FORM_LOADING_VALUES',
-  TYPE_FORM_LOADED_VALUES: 'TYPE_FORM_LOADED_VALUES'
+  TYPE_FORM_LOADED_VALUES: 'TYPE_FORM_LOADED_VALUES',
 };
 
 export const loadDataFromLocalStore = () =>
   dispatch =>
     dispatch({
-      type: EVENTS_FORM.TYPE_FORM_LOADING_VALUES
+      type: EVENTS_FORM.TYPE_FORM_LOADING_VALUES,
     });
 
 export const submitForm = (name, values) =>
@@ -19,9 +19,9 @@ export const submitForm = (name, values) =>
     payload: {
       [name]: {
         values,
-        submit: true
-      }
-    }
+        submit: true,
+      },
+    },
   });
 
 export const submitSuccess = (name, values) =>
@@ -29,8 +29,8 @@ export const submitSuccess = (name, values) =>
     type: EVENTS_FORM.TYPE_FORM_SUBMIT_SUCCESS,
     payload: {
       name,
-      values
-    }
+      values,
+    },
   });
 
 export const submitFail = (name, errors) =>
@@ -38,9 +38,9 @@ export const submitFail = (name, errors) =>
     type: EVENTS_FORM.TYPE_FORM_SUBMIT_FAIL,
     payload: {
       [name]: {
-        errors
-      }
-    }
+        errors,
+      },
+    },
   });
 
 export const changeForm = (name, field, value, error) =>
@@ -49,11 +49,11 @@ export const changeForm = (name, field, value, error) =>
     payload: {
       [name]: {
         values: {
-          [field]: value
+          [field]: value,
         },
         errors: {
-          [field]: error
-        }
-      }
-    }
+          [field]: error,
+        },
+      },
+    },
   });

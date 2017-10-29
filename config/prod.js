@@ -15,6 +15,27 @@ export const prodConfig = {
   module: {
     rules: [
       {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              compact: true,
+              presets: [
+                'env', 'react'
+              ],
+              plugins: [
+                'syntax-dynamic-import',
+                'transform-decorators-legacy',
+                'transform-class-properties',
+                'transform-object-rest-spread'
+              ]
+            }
+          }
+        ]
+      },
+      {
         test: /\.styl$/,
         exclude: /node_modules/,
         use: ExtractTextPlugin.extract({
@@ -35,19 +56,17 @@ export const prodConfig = {
     ]
   },
 
-  target: 'web',
-
   plugins: [
     new ExtractTextPlugin('css/[name].css'),
     new ProgressPlugin((percentage, msg) => {
-      let percents = percentage * 100,
-        percentageFormatted = String(percents).split('.').length > 1 ? (percents).toFixed(2) : percents;
+      const percents = percentage * 100;
+      const percentageFormatted = String(percents).split('.').length > 1 ? (percents).toFixed(2) : percents;
       if (percentageFormatted % 5 === 0) {
-        console.log(percentageFormatted + '%', msg);
+        console.log(`${percentageFormatted}% ${msg}`);
       }
     }),
     new CompressionPlugin({
-      algorithm: "gzip",
+      algorithm: 'gzip',
       threshold: 10240,
       minRatio: 0.8
     }),
@@ -56,16 +75,16 @@ export const prodConfig = {
       debug: false,
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-      new webpack.optimize.UglifyJsPlugin({
-          compress: {
-              warnings: false,
-              comparisons: false,
-          },
-          output: {
-              comments: false,
-              ascii_only: true,
-          },
-          sourceMap: false,
-      }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        comparisons: false,
+      },
+      output: {
+        comments: false,
+        ascii_only: true,
+      },
+      sourceMap: false,
+    }),
   ]
 };

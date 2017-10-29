@@ -3,6 +3,8 @@ import webpack from 'webpack';
 import autoprefixer from 'autoprefixer';
 
 export const devConfig = {
+  devtool: 'cheap-eval-source-map',
+
   entry: {
     app: [
       'babel-polyfill',
@@ -13,6 +15,29 @@ export const devConfig = {
 
   module: {
     rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                'env', 'react'
+              ],
+              plugins: [
+                'syntax-dynamic-import',
+                'transform-decorators-legacy',
+                'transform-class-properties',
+                'transform-object-rest-spread'
+              ]
+            }
+          },
+          {
+            loader: 'eslint-loader'
+          }
+        ]
+      },
       {
         test: /\.styl$/,
         exclude: /node_modules/,
@@ -32,6 +57,16 @@ export const devConfig = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        eslint: {
+          failOnWarning: false,
+          failOnError: false,
+          fix: false,
+          quiet: false,
+        },
+      },
+    }),
   ]
 };

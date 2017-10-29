@@ -26,4 +26,4 @@ export default (stateCopy = initState, { type, payload }) => {
     default:
       return state;
   }
-}
+};

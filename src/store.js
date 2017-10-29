@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { rootReducer } from './reducers/index';
-import { localStorageMiddleware } from './middlewares/localStorage';
+import rootReducer from './reducers/index';
+import localStorageMiddleware from './middlewares/localStorage';
 
 const middlewares = [localStorageMiddleware, thunk];
 
