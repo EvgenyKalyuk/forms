@@ -23,7 +23,7 @@ Develop Mode
 
 >yarn start:dev
 
-Приложение будет доступно на 3000 порту(`http://localhost:3000`).
+Приложение будет доступно на 3000 порту([http://localhost:3000](http://localhost:3000)).
 
 Production Mode
 -----------------------
