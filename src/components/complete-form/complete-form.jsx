@@ -2,25 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { completeForm } from '../../actions/complete.actions';
+import { completeForm } from '../../actions/forms.actions';
 import './complete-form.styl';
 
 @connect(({ completeState, formsState }) => ({
-  completeState,
   formsState,
 }), dispatch => ({
   completeFormHandler: bindActionCreators(completeForm, dispatch),
 }))
 
-class CompleteForm extends React.Component {
+export class CompleteFormComponent extends React.Component {
+  static defaultProps = {
+    formsState: {},
+    completeFormHandler: () => null,
+  };
+
+  static propTypes = {
+    formsState: PropTypes.object,
+    completeFormHandler: PropTypes.func,
+  };
+
   render() {
     const {
-      completeState,
-      formsState,
       completeFormHandler,
+      formsState,
     } = this.props;
-    const { isCompleted } = completeState.payload;
-    const { personal = {}, bank = {} } = formsState.payload;
+    const {
+      isCompleted = false,
+      personal = {},
+      bank = {}
+    } = formsState.payload;
     let isFull = true;
 
     if (Object.keys(personal.values).length) {
@@ -70,17 +81,3 @@ class CompleteForm extends React.Component {
     );
   }
 }
-
-CompleteForm.defaultProps = {
-  completeState: {},
-  formsState: {},
-  completeFormHandler: () => null,
-};
-
-CompleteForm.propTypes = {
-  completeState: PropTypes.object,
-  formsState: PropTypes.object,
-  completeFormHandler: PropTypes.func,
-};
-
-export default CompleteForm;

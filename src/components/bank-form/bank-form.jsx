@@ -82,7 +82,7 @@ BankForm.propTypes = {
   formsState: PropTypes.object,
 };
 
-export default FormHOC(BankForm, {
+export const BankFormComponent =  FormHOC(BankForm, {
   name: 'bank',
   validation,
   masks: {

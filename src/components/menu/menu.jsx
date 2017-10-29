@@ -4,7 +4,7 @@ import shortId from 'shortid';
 import { Link } from 'react-router';
 import './menu.styl';
 
-const Menu = ({ items }) => (
+export const Menu = ({ items }) => (
   <ul className='menu'>
     {items.map(item => (
       <li
@@ -26,5 +26,3 @@ const Menu = ({ items }) => (
 Menu.propTypes = {
   items: PropTypes.array.isRequired,
 };
-
-export default Menu;

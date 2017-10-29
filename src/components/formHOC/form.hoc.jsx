@@ -23,7 +23,34 @@ const FormHOC = (WrappedComponent, formOption) => {
 
   const maskField = (value, mask) => mask(value);
 
+  @connect(({ formsState }) => ({
+    formsState,
+  }), dispatch => ({
+    submitForm: bindActionCreators(submitForm, dispatch),
+    submitSuccess: bindActionCreators(submitSuccess, dispatch),
+    submitFail: bindActionCreators(submitFail, dispatch),
+    changeForm: bindActionCreators(changeForm, dispatch),
+  }))
+
   class Form extends React.Component {
+    static defaultProps = {
+      formsState: {},
+      submitForm: () => null,
+      submitSuccess: () => null,
+      submitFail: () => null,
+      changeForm: () => null,
+      initForm: () => null,
+    };
+
+    static propTypes = {
+      formsState: PropTypes.object,
+      submitForm: PropTypes.func,
+      submitSuccess: PropTypes.func,
+      submitFail: PropTypes.func,
+      changeForm: PropTypes.func,
+      initForm: PropTypes.func,
+    };
+
     constructor(props) {
       super(props);
 
@@ -81,32 +108,7 @@ const FormHOC = (WrappedComponent, formOption) => {
     }
   }
 
-  Form.defaultProps = {
-    formsState: {},
-    submitForm: () => null,
-    submitSuccess: () => null,
-    submitFail: () => null,
-    changeForm: () => null,
-    initForm: () => null,
-  };
-
-  Form.propTypes = {
-    formsState: PropTypes.object,
-    submitForm: PropTypes.func,
-    submitSuccess: PropTypes.func,
-    submitFail: PropTypes.func,
-    changeForm: PropTypes.func,
-    initForm: PropTypes.func,
-  };
-
-  return connect(({ formsState }) => ({
-    formsState,
-  }), dispatch => ({
-    submitForm: bindActionCreators(submitForm, dispatch),
-    submitSuccess: bindActionCreators(submitSuccess, dispatch),
-    submitFail: bindActionCreators(submitFail, dispatch),
-    changeForm: bindActionCreators(changeForm, dispatch),
-  }))(Form);
+  return Form;
 };
 
 export default FormHOC;

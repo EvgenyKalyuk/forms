@@ -3,26 +3,37 @@ export const EVENTS_FORM = {
   TYPE_FORM_SUBMIT_FAIL: 'TYPE_FORM_SUBMIT_FAIL',
   TYPE_FORM_SUBMIT_SUCCESS: 'TYPE_FORM_SUBMIT_SUCCESS',
   TYPE_FORM_CHANGE: 'TYPE_FORM_CHANGE',
-  TYPE_FORM_LOADING_VALUES: 'TYPE_FORM_LOADING_VALUES',
   TYPE_FORM_LOADED_VALUES: 'TYPE_FORM_LOADED_VALUES',
+  TYPE_FORM_COMPLETE: 'TYPE_FORM_COMPLETE',
 };
 
 export const loadDataFromLocalStore = () =>
-  dispatch =>
-    dispatch({
-      type: EVENTS_FORM.TYPE_FORM_LOADING_VALUES,
+  (dispatch) => {
+    const localData = JSON.parse(localStorage.getItem('forms')) || {};
+
+    return dispatch({
+      type: EVENTS_FORM.TYPE_FORM_LOADED_VALUES,
+      payload: localData
     });
+  };
 
 export const submitForm = (name, values) =>
-  dispatch => dispatch({
-    type: EVENTS_FORM.TYPE_FORM_SUBMIT,
-    payload: {
-      [name]: {
-        values,
-        submit: true,
+  dispatch => {
+    const localData = JSON.parse(localStorage.getItem('forms')) || {};
+
+    localData[name] = {values};
+    localStorage.setItem('forms', JSON.stringify(localData));
+
+    return dispatch({
+      type: EVENTS_FORM.TYPE_FORM_SUBMIT,
+      payload: {
+        [name]: {
+          values,
+          submit: true,
+        },
       },
-    },
-  });
+    });
+  };
 
 export const submitSuccess = (name, values) =>
   dispatch => dispatch({
@@ -56,4 +67,12 @@ export const changeForm = (name, field, value, error) =>
         },
       },
     },
+  });
+
+export const completeForm = () =>
+  dispatch => dispatch({
+    type: EVENTS_FORM.TYPE_FORM_COMPLETE,
+    payload: {
+      isCompleted: true
+    }
   });

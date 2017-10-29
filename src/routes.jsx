@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router';
-import MainContainer from './containers/main';
+import { MainContainer } from './containers/main';
 import { CLIENT_PAGES } from './common/const';
 
-const routes = () => (
+export const routes = () => (
   <Route component={MainContainer}>
     <Route
       path={CLIENT_PAGES.PERSONAL}
@@ -31,5 +31,3 @@ const routes = () => (
     />
   </Route>
 );
-
-export default routes;

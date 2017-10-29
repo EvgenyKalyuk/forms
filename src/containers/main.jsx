@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadDataFromLocalStore } from '../actions/forms.actions';
-import { loadStateFromLocalStorage } from '../actions/complete.actions';
-import Menu from '../components/menu/menu';
-import FormCount from '../components/forms-count/forms-count';
+import { Menu } from '../components/menu/menu';
+import { FormCount } from '../components/forms-count/forms-count';
 import { CLIENT_PAGES } from '../common/const';
 
 const forms = [{
@@ -24,12 +23,21 @@ const forms = [{
 
 @connect(() => ({}), dispatch => ({
   loadDataFromLocalStore: bindActionCreators(loadDataFromLocalStore, dispatch),
-  loadStateFromLocalStorage: bindActionCreators(loadStateFromLocalStorage, dispatch),
 }))
-class MainContainer extends React.Component {
+export class MainContainer extends React.Component {
+  static defaultProps = {
+    loadStateFromLocalStorage: () => null,
+    loadDataFromLocalStore: () => null,
+  };
+
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+    loadDataFromLocalStore: PropTypes.func,
+    loadStateFromLocalStorage: PropTypes.func,
+  };
+
   componentWillMount() {
     this.props.loadDataFromLocalStore();
-    this.props.loadStateFromLocalStorage();
   }
 
   render() {
@@ -50,16 +58,3 @@ class MainContainer extends React.Component {
     );
   }
 }
-
-MainContainer.defaultProps = {
-  loadStateFromLocalStorage: () => null,
-  loadDataFromLocalStore: () => null,
-};
-
-MainContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-  loadDataFromLocalStore: PropTypes.func,
-  loadStateFromLocalStorage: PropTypes.func,
-};
-
-export default MainContainer;

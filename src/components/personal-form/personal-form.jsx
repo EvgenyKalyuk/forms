@@ -118,7 +118,7 @@ PersonalForm.propTypes = {
   formsState: PropTypes.object,
 };
 
-export default FormHOC(PersonalForm, {
+export const PersonalFormComponent = FormHOC(PersonalForm, {
   name: 'personal',
   masks: {
     years: yearsMask,

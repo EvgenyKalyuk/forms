@@ -4,20 +4,29 @@ import { connect } from 'react-redux';
 import shortId from 'shortid';
 import './forms-count.styl';
 
-@connect(({ formsState, completeState }) => ({
+@connect(({ formsState }) => ({
   formsState,
-  completeState,
 }))
 
-class FormCount extends React.Component {
+export class FormCount extends React.Component {
+  static defaultProps = {
+    formsState: {},
+    completeState: {},
+  };
+
+  static propTypes = {
+    formsState: PropTypes.object,
+    completeState: PropTypes.object,
+    items: PropTypes.array.isRequired,
+  };
+
   render() {
     const {
       items = [],
       formsState = {},
-      completeState = {},
     } = this.props;
     const { payload = {} } = formsState;
-    const { isCompleted = false } = completeState.payload;
+    const { isComplete = false } = payload;
 
     return (
       <div className='forms-count'>
@@ -38,10 +47,10 @@ class FormCount extends React.Component {
           if (item.state === 'complete') {
             return (
               <div
-                className={`forms-count__item ${!isCompleted ? 'forms-count__item_error' : ''}`}
+                className={`forms-count__item ${!isComplete ? 'forms-count__item_error' : ''}`}
                 key={shortId.generate()}
               >
-                {item.title}: {isCompleted ? 'Yes' : 'No'}
+                {item.title}: {isComplete ? 'Yes' : 'No'}
               </div>
             );
           }
@@ -59,15 +68,3 @@ class FormCount extends React.Component {
   }
 }
 
-FormCount.defaultProps = {
-  formsState: {},
-  completeState: {},
-};
-
-FormCount.propTypes = {
-  formsState: PropTypes.object,
-  completeState: PropTypes.object,
-  items: PropTypes.array.isRequired,
-};
-
-export default FormCount;
