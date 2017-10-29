@@ -26,8 +26,8 @@ export class FormCount extends React.Component {
       formsState = {},
     } = this.props;
     const { payload = {} } = formsState;
-    const { isComplete = false } = payload;
-
+    const { isCompleted = false } = payload;
+    console.log(isCompleted);
     return (
       <div className='forms-count'>
         {items.map((item) => {
@@ -47,10 +47,10 @@ export class FormCount extends React.Component {
           if (item.state === 'complete') {
             return (
               <div
-                className={`forms-count__item ${!isComplete ? 'forms-count__item_error' : ''}`}
+                className={`forms-count__item ${!isCompleted ? 'forms-count__item_error' : ''}`}
                 key={shortId.generate()}
               >
-                {item.title}: {isComplete ? 'Yes' : 'No'}
+                {item.title}: {isCompleted ? 'Yes' : 'No'}
               </div>
             );
           }

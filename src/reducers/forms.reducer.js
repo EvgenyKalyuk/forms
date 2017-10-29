@@ -26,6 +26,7 @@ export default (stateCopy = initState, {type, payload}) => {
     case EVENTS_FORM.TYPE_FORM_LOADED_VALUES:
     case EVENTS_FORM.TYPE_FORM_CHANGE:
     case EVENTS_FORM.TYPE_FORM_SUBMIT:
+    case EVENTS_FORM.TYPE_FORM_COMPLETE:
       state.type = type;
       state.payload = merge(state.payload, payload);
       return state;

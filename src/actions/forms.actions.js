@@ -70,9 +70,16 @@ export const changeForm = (name, field, value, error) =>
   });
 
 export const completeForm = () =>
-  dispatch => dispatch({
-    type: EVENTS_FORM.TYPE_FORM_COMPLETE,
-    payload: {
-      isCompleted: true
-    }
-  });
+  dispatch => {
+    const localData = JSON.parse(localStorage.getItem('forms')) || {};
+    localData.isCompleted = true;
+
+    localStorage.setItem('forms', JSON.stringify(localData));
+
+    return dispatch({
+      type: EVENTS_FORM.TYPE_FORM_COMPLETE,
+      payload: {
+        isCompleted: true
+      }
+    });
+  };
