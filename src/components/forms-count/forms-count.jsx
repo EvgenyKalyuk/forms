@@ -27,7 +27,7 @@ export class FormCount extends React.Component {
     } = this.props;
     const { payload = {} } = formsState;
     const { isCompleted = false } = payload;
-    console.log(isCompleted);
+
     return (
       <div className='forms-count'>
         {items.map((item) => {

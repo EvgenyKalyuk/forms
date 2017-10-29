@@ -15,42 +15,28 @@ Forms
 Develop Mode
 --------------------
 
-Для запуска development mode, необходимо установить webpack-dev-server:
-
->npm i -g webpack-dev-server
-
-или
-
->yarn global add webpack-dev-server
-
-и выполнить
+Для запуска development mode выполните:
 
 >npm run start:dev
 
 или
 
->yarn run start:dev
+>yarn start:dev
 
-Приложение будет доступно на 3000 порту.
+Приложение будет доступно на 3000 порту([http://localhost:3000](http://localhost:3000)).
 
 Production Mode
 -----------------------
 
-Для сборки production mode, необходимо установить webpack:
-
->npm i -g webpack
-
-или
-
->yarn global add webpack
-
-и выполнить
+Для сборки production mode выполните:
 
 >npm run start:build
 
 или
 
->yarn run start:build
+>yarn start:build
+
+Приложение будет собрано в папку dist
 
 Стек
 ------
