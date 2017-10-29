@@ -1,8 +1,8 @@
 import path from 'path';
 import webpack from 'webpack';
-import {NODE_ENV} from '../bin/env-config';
+import { NODE_ENV } from '../bin/env-config';
 
-export const commonConfig = {
+const commonConfig = {
   output: {
     publicPath: '/',
     path: path.join(__dirname, '..', 'dist'),
@@ -21,9 +21,11 @@ export const commonConfig = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(NODE_ENV),
-      }
-    })
+      },
+    }),
   ],
 
-  target: 'web'
+  target: 'web',
 };
+
+export default commonConfig;

@@ -4,11 +4,11 @@ import ProgressPlugin from 'webpack/lib/ProgressPlugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
-export const prodConfig = {
+const prodConfig = {
   entry: {
     app: [
       'babel-polyfill',
-      path.join(__dirname, '..', 'src', 'bootstrap.jsx')
+      path.join(__dirname, '..', 'src', 'bootstrap.jsx'),
     ],
   },
 
@@ -23,17 +23,17 @@ export const prodConfig = {
             options: {
               compact: true,
               presets: [
-                'env', 'react'
+                'env', 'react',
               ],
               plugins: [
                 'syntax-dynamic-import',
                 'transform-decorators-legacy',
                 'transform-class-properties',
-                'transform-object-rest-spread'
-              ]
-            }
-          }
-        ]
+                'transform-object-rest-spread',
+              ],
+            },
+          },
+        ],
       },
       {
         test: /\.styl$/,
@@ -44,16 +44,16 @@ export const prodConfig = {
             {
               loader: 'css-loader',
               options: {
-                minimize: true
-              }
+                minimize: true,
+              },
             },
             {
-              loader: 'stylus-loader'
-            }
-          ]
-        })
-      }
-    ]
+              loader: 'stylus-loader',
+            },
+          ],
+        }),
+      },
+    ],
   },
 
   plugins: [
@@ -68,7 +68,7 @@ export const prodConfig = {
     new CompressionPlugin({
       algorithm: 'gzip',
       threshold: 10240,
-      minRatio: 0.8
+      minRatio: 0.8,
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
@@ -86,5 +86,7 @@ export const prodConfig = {
       },
       sourceMap: false,
     }),
-  ]
+  ],
 };
+
+export default prodConfig;
